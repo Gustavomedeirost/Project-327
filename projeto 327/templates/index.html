@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Dashboard de Dados</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Dashboard de Dados</h1>
+    <div id="data-table">
+        <div class="conteiner-titulo2">
+            <h2>Tabela de Dados</h2>
+            <button class="button-main" onclick="window.location.href='/plot'">Ver Gráfico</button>
+        </div>
+        <table id="table-data" border="1">
+            <thead>
+                <tr>
+                    <th>Datas</th>
+                    <th>Valores</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#table-data tbody');
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${row.Date}</td><td>${row.Value}</td>`;
+                    tableBody.appendChild(tr);
+                });
+            });
+    </script>
+</body>
+</html>
